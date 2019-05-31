@@ -16,7 +16,7 @@ namespace ViewModel
         public T Source
         {
             get { return _Source; }
-            set { _Source = value; OnPropertyChanged(); }
+            set { _Source = value; OnPropertyChanged("Source"); }
         }
 
     }

@@ -256,10 +256,13 @@ namespace ViewModel.Base
 
             protected void OnPropertyChanged([CallerMemberName]string propertyName = "")
             {
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-                }
+            if (PropertyChanged != null)
+            {
+
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+
+
             }
+        }
         }
 }

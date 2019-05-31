@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 
@@ -19,8 +20,6 @@ namespace ViewModel
 
         public bool _IsEnabled;
         public bool IsEnabled { get { return _IsEnabled; } set { _IsEnabled = value; OnPropertyChanged(); } }
-
-
 
         protected void OnPropertyChanged([CallerMemberName]string propertyName = "")
         {
