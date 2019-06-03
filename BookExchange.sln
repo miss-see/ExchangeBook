@@ -15,6 +15,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proxy", "Proxy\Proxy.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility", "Utility\Utility.csproj", "{628718C9-C5B1-4CF0-B522-B46A3E2483A8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "配置文件", "配置文件", "{A2A449ED-FFF9-42E3-8857-7EEE516B471D}"
+	ProjectSection(SolutionItems) = preProject
+		product\Debug\config\autofac.xml = product\Debug\config\autofac.xml
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogService", "LogService\LogService.csproj", "{A8EB861F-ACF4-4536-B511-861356F17C2A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +52,10 @@ Global
 		{628718C9-C5B1-4CF0-B522-B46A3E2483A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{628718C9-C5B1-4CF0-B522-B46A3E2483A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{628718C9-C5B1-4CF0-B522-B46A3E2483A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8EB861F-ACF4-4536-B511-861356F17C2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8EB861F-ACF4-4536-B511-861356F17C2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8EB861F-ACF4-4536-B511-861356F17C2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8EB861F-ACF4-4536-B511-861356F17C2A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Utility;
 using ViewModel;
 
 namespace BookExchange
@@ -17,6 +18,8 @@ namespace BookExchange
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            IOCContainer.InitAutofac();
+
             VM_WindowLogin login = new VM_WindowLogin();
             login.Show();
 
