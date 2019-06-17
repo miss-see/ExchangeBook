@@ -20,8 +20,8 @@ namespace BookExchange
         {
             IOCContainer.InitAutofac();
 
-            VM_WindowLogin login = new VM_WindowLogin();
-            login.Show();
+            VM_WindowMain main = new VM_WindowMain();
+            main.Show();
 
             base.OnStartup(e);
         }

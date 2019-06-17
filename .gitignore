@@ -204,3 +204,5 @@
 /product/Debug/NLog.xml
 /LogService/bin
 /LogService/obj
+/product/Debug
+/product/Debug

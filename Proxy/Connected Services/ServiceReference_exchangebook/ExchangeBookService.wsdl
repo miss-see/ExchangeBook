@@ -27,6 +27,16 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="GridData">
+        <s:complexType />
+      </s:element>
+      <s:element name="GridDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GridDataResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
     </s:schema>
   </wsdl:types>
   <wsdl:message name="HelloWorldSoapIn">
@@ -41,6 +51,12 @@
   <wsdl:message name="LoginSoapOut">
     <wsdl:part name="parameters" element="tns:LoginResponse" />
   </wsdl:message>
+  <wsdl:message name="GridDataSoapIn">
+    <wsdl:part name="parameters" element="tns:GridData" />
+  </wsdl:message>
+  <wsdl:message name="GridDataSoapOut">
+    <wsdl:part name="parameters" element="tns:GridDataResponse" />
+  </wsdl:message>
   <wsdl:portType name="ExchangeBookServiceSoap">
     <wsdl:operation name="HelloWorld">
       <wsdl:input message="tns:HelloWorldSoapIn" />
@@ -50,6 +66,11 @@
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">登录验证</wsdl:documentation>
       <wsdl:input message="tns:LoginSoapIn" />
       <wsdl:output message="tns:LoginSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GridData">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gird数据测试</wsdl:documentation>
+      <wsdl:input message="tns:GridDataSoapIn" />
+      <wsdl:output message="tns:GridDataSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="ExchangeBookServiceSoap" type="tns:ExchangeBookServiceSoap">
@@ -72,6 +93,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GridData">
+      <soap:operation soapAction="http://tempuri.org/GridData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="ExchangeBookServiceSoap12" type="tns:ExchangeBookServiceSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -86,6 +116,15 @@
     </wsdl:operation>
     <wsdl:operation name="Login">
       <soap12:operation soapAction="http://tempuri.org/Login" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GridData">
+      <soap12:operation soapAction="http://tempuri.org/GridData" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="b49b348a-0c1a-4e13-8563-82382c4fea65" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="02544634-ad40-427b-aaa5-b2a9d9000bda" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -22,8 +22,8 @@
     <MetadataSource Address="http://localhost:59077/ExchangeBookService.asmx" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="ExchangeBookService1.wsdl" MetadataType="Wsdl" ID="dbc579c9-af47-4c8a-b376-e9e0c81e985c" SourceId="1" SourceUrl="http://localhost:59077/ExchangeBookService.asmx?wsdl" />
-    <MetadataFile FileName="ExchangeBookService1.disco" MetadataType="Disco" ID="b24d1ae2-a400-4c41-9fef-1703d5393e9a" SourceId="1" SourceUrl="http://localhost:59077/ExchangeBookService.asmx?disco" />
+    <MetadataFile FileName="ExchangeBookService.wsdl" MetadataType="Wsdl" ID="32ea7a58-fb2b-45b3-b616-8bb53b88a4e5" SourceId="1" SourceUrl="http://localhost:59077/ExchangeBookService.asmx?wsdl" />
+    <MetadataFile FileName="ExchangeBookService.disco" MetadataType="Disco" ID="b31aea83-3b64-4e32-b305-70ce743d2cf2" SourceId="1" SourceUrl="http://localhost:59077/ExchangeBookService.asmx?disco" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

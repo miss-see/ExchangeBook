@@ -93,15 +93,15 @@
   <ItemGroup>
     <Compile Include="Base\BaseCommand.cs" />
     <Compile Include="Base\BaseViewModel.cs" />
-    <Compile Include="Connected Services\ServiceReference_exchangebook\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
+    <Compile Include="DataControl\ComboBox.cs" />
     <Compile Include="DataControl\Control.cs" />
+    <Compile Include="DataControl\DataGrid.cs" />
     <Compile Include="DataControl\Image.cs" />
+    <Compile Include="DataControl\ListBox.cs" />
+    <Compile Include="DataControl\Popup.cs" />
     <Compile Include="DataControl\TextBlock.cs" />
     <Compile Include="DataControl\TextBox.cs" />
+    <Compile Include="Helper\DataGridHelper.cs" />
     <Compile Include="Helper\DispatcherHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VM_WindowLogin.cs" />
@@ -109,7 +109,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DTO\DTO.csproj">
-      <Project>{236466ec-4310-4607-a191-37c56d559fda}</Project>
+      <Project>{236466EC-4310-4607-A191-37C56D559FDA}</Project>
       <Name>DTO</Name>
     </ProjectReference>
     <ProjectReference Include="..\LogService\LogService.csproj">
@@ -130,36 +130,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
-    <None Include="Connected Services\ServiceReference_exchangebook\ExchangeBookService1.wsdl" />
-    <None Include="Connected Services\ServiceReference_exchangebook\ViewModel.ServiceReference_exchangebook.HelloWorldResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\ServiceReference_exchangebook\ViewModel.ServiceReference_exchangebook.LoginResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\ServiceReference_exchangebook\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\ServiceReference_exchangebook\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\ServiceReference_exchangebook\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\ServiceReference_exchangebook\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\ServiceReference_exchangebook\ExchangeBookService1.disco" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

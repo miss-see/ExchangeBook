@@ -1,5 +1,6 @@
 ﻿using DTO;
 using Newtonsoft.Json;
+using Proxy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using ViewModel.Base;
-using ViewModel.ServiceReference_exchangebook;
 
 namespace ViewModel
 {
@@ -68,10 +68,7 @@ namespace ViewModel
                 return;
             }
 
-            ServiceReference_exchangebook.ExchangeBookServiceSoapClient server = new ServiceReference_exchangebook.ExchangeBookServiceSoapClient();
-            String msg =  server.Login(name, pwd);
-
-            LoginResult result = JsonConvert.DeserializeObject<LoginResult>(msg);
+            ExchangeBookServer.Login(name, pwd);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MahApps.Metro.Controls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,7 @@ namespace BookExchange
     /// <summary>
     /// WindowMain.xaml 的交互逻辑
     /// </summary>
-    public partial class WindowMain : Window
+    public partial class WindowMain : MetroWindow
     {
         public WindowMain()
         {
