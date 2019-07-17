@@ -29,7 +29,7 @@ namespace Proxy.ServiceReference_exchangebook {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Login", ReplyAction="*")]
         System.Threading.Tasks.Task<Proxy.ServiceReference_exchangebook.LoginResponse> LoginAsync(Proxy.ServiceReference_exchangebook.LoginRequest request);
         
-        // CODEGEN: 命名空间 http://tempuri.org/ 的元素名称 GridDataResult 以后生成的消息协定未标记为 nillable
+        // CODEGEN: 命名空间 http://tempuri.org/ 的元素名称 family 以后生成的消息协定未标记为 nillable
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GridData", ReplyAction="*")]
         Proxy.ServiceReference_exchangebook.GridDataResponse GridData(Proxy.ServiceReference_exchangebook.GridDataRequest request);
         
@@ -190,10 +190,25 @@ namespace Proxy.ServiceReference_exchangebook {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute()]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
     public partial class GridDataRequestBody {
         
+        [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
+        public int currentPage;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+        public int count;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
+        public string family;
+        
         public GridDataRequestBody() {
+        }
+        
+        public GridDataRequestBody(int currentPage, int count, string family) {
+            this.currentPage = currentPage;
+            this.count = count;
+            this.family = family;
         }
     }
     
@@ -313,9 +328,12 @@ namespace Proxy.ServiceReference_exchangebook {
             return base.Channel.GridData(request);
         }
         
-        public string GridData() {
+        public string GridData(int currentPage, int count, string family) {
             Proxy.ServiceReference_exchangebook.GridDataRequest inValue = new Proxy.ServiceReference_exchangebook.GridDataRequest();
             inValue.Body = new Proxy.ServiceReference_exchangebook.GridDataRequestBody();
+            inValue.Body.currentPage = currentPage;
+            inValue.Body.count = count;
+            inValue.Body.family = family;
             Proxy.ServiceReference_exchangebook.GridDataResponse retVal = ((Proxy.ServiceReference_exchangebook.ExchangeBookServiceSoap)(this)).GridData(inValue);
             return retVal.Body.GridDataResult;
         }
@@ -325,9 +343,12 @@ namespace Proxy.ServiceReference_exchangebook {
             return base.Channel.GridDataAsync(request);
         }
         
-        public System.Threading.Tasks.Task<Proxy.ServiceReference_exchangebook.GridDataResponse> GridDataAsync() {
+        public System.Threading.Tasks.Task<Proxy.ServiceReference_exchangebook.GridDataResponse> GridDataAsync(int currentPage, int count, string family) {
             Proxy.ServiceReference_exchangebook.GridDataRequest inValue = new Proxy.ServiceReference_exchangebook.GridDataRequest();
             inValue.Body = new Proxy.ServiceReference_exchangebook.GridDataRequestBody();
+            inValue.Body.currentPage = currentPage;
+            inValue.Body.count = count;
+            inValue.Body.family = family;
             return ((Proxy.ServiceReference_exchangebook.ExchangeBookServiceSoap)(this)).GridDataAsync(inValue);
         }
     }

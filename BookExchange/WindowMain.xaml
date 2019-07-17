@@ -24,6 +24,7 @@
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition Height="8*"></RowDefinition>
+            <RowDefinition></RowDefinition>
 
         </Grid.RowDefinitions>
 
@@ -60,11 +61,26 @@
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="书友" Binding="{Binding UserName}" FontSize="20" Width="2*"> </DataGridTextColumn>
-                <DataGridTextColumn Header="信用等级" Binding="{Binding Level}" FontSize="20" Width="2*"></DataGridTextColumn>
+                <!--<DataGridTextColumn Header="信用等级" Binding="{Binding Level}" FontSize="20" Width="2*"></DataGridTextColumn>-->
 
             </DataGrid.Columns>
         </DataGrid>
-        
+        <StackPanel DataContext="{Binding DetailData}" Orientation="Horizontal" 
+                    DockPanel.Dock="Bottom" HorizontalAlignment="Right" Margin="0,10,10,0"
+                    Grid.Column="1" Grid.Row="2">
+            <Button  Content="上一页" Width="60" Command="{Binding PreviousCommand}" Height="20" Margin="20,0,0,0" VerticalAlignment="Top" />
+            <Button  Content="下一页" Width="60" Command="{Binding NextCommand}" Height="20" Margin="20,0,0,0" VerticalAlignment="Top" />
+            <TextBlock VerticalAlignment="Center" Text="每页" Margin="20,0,0,0"></TextBlock>
+            <TextBlock VerticalAlignment="Center" Text="{Binding  SkipNumber}"  Margin="0,0,0,0"></TextBlock>
+            <TextBlock VerticalAlignment="Center" Text="条"></TextBlock>
+            <TextBlock VerticalAlignment="Center" Text="{Binding CurrentPage}"  Margin="20,0,0,0"></TextBlock>
+            <TextBlock VerticalAlignment="Center" Text="/"></TextBlock>
+            <TextBlock VerticalAlignment="Center" Text="{Binding PageCount}"></TextBlock>
+            <TextBlock VerticalAlignment="Center" Text="总记录数：" Margin="20,0,0,0"></TextBlock>
+            <TextBlock VerticalAlignment="Center" Text="{Binding RecordCount}"></TextBlock>
+            <TextBox  VerticalAlignment="Center" Width="40" Height="20" Margin="40,0,0,0" Text="{Binding JumpTextBox.Text}" ></TextBox>
+            <Button  Content="GO"  Command="{Binding JumpCommand}" Width="40" Height="20" Margin="5,0,0,0" VerticalAlignment="Top" />
+        </StackPanel>
 
         <Popup 
                StaysOpen="{Binding CharacteristicBookList.StaysOpen}" IsOpen="{Binding CharacteristicBookList.IsOpen}"

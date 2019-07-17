@@ -124,6 +124,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DTO\DTO.csproj">
+      <Project>{236466EC-4310-4607-A191-37C56D559FDA}</Project>
+      <Name>DTO</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LogService\LogService.csproj">
       <Project>{A8EB861F-ACF4-4536-B511-861356F17C2A}</Project>
       <Name>LogService</Name>

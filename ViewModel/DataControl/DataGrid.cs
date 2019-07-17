@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using Utility; 
+using Utility;
 using System.Windows.Data;
 using System.Data;
 using System.Threading;
@@ -42,7 +42,44 @@ namespace ViewModel
         private Action<T> LoadAction = null;
         public Action<T> SelectCallBack = null;
         private Func<object, bool> DataFilter = null;
-       
+
+        #region 分页 
+        private volatile int _CurrentPage = 1;
+        /// <summary>
+        /// 当前页
+        /// </summary>
+        public int CurrentPage
+        {
+            get { return _CurrentPage; }
+            set
+            {
+                _CurrentPage = value;
+                if (_CurrentPage > PageCount)
+                {
+                    _CurrentPage = PageCount;
+                }
+                if (_CurrentPage < 1)
+                {
+                    _CurrentPage = 1;
+                }
+                OnPropertyChanged();
+            }
+        }
+
+        private int _PageCount = 1;
+        /// <summary>
+        /// 页数
+        /// </summary>
+        public int PageCount
+        {
+            get { return _PageCount; }
+            set
+            {
+                _PageCount = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         private int _RecordCount = 0;
         /// <summary>
@@ -54,10 +91,151 @@ namespace ViewModel
             set
             {
                 _RecordCount = value;
+                if (_RecordCount <= SkipNumber)
+                {
+                    PageCount = 1;
+                }
+                else
+                {
+                    PageCount = int.Parse(Math.Ceiling((double)RecordCount / (double)SkipNumber).ToString());
+                }
+                if (_CurrentPage > PageCount)
+                {
+                    _CurrentPage = PageCount;
+                }
                 OnPropertyChanged();
             }
         }
 
+        private int _SkipNumber = 30;
+        /// <summary>
+        /// 每页条数
+        /// </summary>
+        public int SkipNumber
+        {
+            get { return _SkipNumber; }
+            set
+            {
+                _SkipNumber = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private TextBox<string> _JumpTextBox = new TextBox<string>();
+        public TextBox<string> JumpTextBox
+        {
+            get { return _JumpTextBox; }
+            set
+            {
+                _JumpTextBox = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #region 跳页
+
+        /// <summary>
+        /// 跳页命令
+        /// </summary>
+        public BaseCommand JumpCommand
+        {
+            get
+            {
+                return new BaseCommand(JumpCommand_Executed);
+            }
+        }
+        /// <summary>
+        /// 跳页
+        /// </summary>
+        /// <param name="send"></param>
+        void JumpCommand_Executed(object send)
+        {
+            int pagenum = 0;
+
+            if (int.TryParse(JumpTextBox.Text, out pagenum))
+            {
+                if (pagenum <= PageCount && pagenum > 0)
+                {
+                    CurrentPage = pagenum;
+
+                    if (LoadAction != null)
+                    {
+                        LoadAction(Condition);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("请正确填写跳转页数。", "提示信息");
+                }
+            }
+            else
+            {
+                MessageBox.Show("请正确填写跳转页数。", "提示信息");
+            }
+        }
+        #endregion
+
+        #region 上一页
+
+        /// <summary>
+        /// 上一页
+        /// </summary>
+        public BaseCommand PreviousCommand
+        {
+            get
+            {
+                return new BaseCommand(PreviousCommand_Executed);
+            }
+        }
+        void PreviousCommand_Executed(object send)
+        {
+            if (CurrentPage > 1)
+            {
+                CurrentPage -= 1;
+                if (LoadAction != null)
+                {
+                    LoadAction(Condition);
+                }
+            }
+            else
+            {
+                MessageBox.Show("已至首页。", "提示信息");
+            }
+        }
+        #endregion
+
+        #region 下一页
+
+        /// <summary>
+        /// 下一页
+        /// </summary>
+        public BaseCommand NextCommand
+        {
+            get
+            {
+                return new BaseCommand(NextCommand_Executed);
+            }
+        }
+        void NextCommand_Executed(object send)
+        {
+            if (CurrentPage < PageCount)
+            {
+                CurrentPage += 1;
+
+                if (LoadAction != null)
+                {
+                    LoadAction(Condition);
+                }
+            }
+            else
+            {
+                MessageBox.Show("已至末页。", "提示信息");
+            }
+        }
+
+        #endregion
+
+        #endregion
 
         private ObservableCollection<T> _ItemsSource = new ObservableCollection<T>();
         public ObservableCollection<T> ItemsSource
@@ -82,7 +260,7 @@ namespace ViewModel
             ItemsSource = new ObservableCollection<T>(itemSource);
         }
 
-        private T _SelectedItem;
+        public T _SelectedItem;
         public T SelectedItem
         {
             get { return _SelectedItem; }
@@ -160,6 +338,7 @@ namespace ViewModel
             LoadAction = loadAction;
             if (LoadAction != null)
             {
+                CurrentPage = 1;
                 LoadAction(conditionRow);
             }
         }
@@ -174,6 +353,7 @@ namespace ViewModel
             }); ;
             if (LoadAction != null)
             {
+                CurrentPage = 1;
                 LoadAction(default(T));
             }
         }
@@ -198,7 +378,7 @@ namespace ViewModel
         }
 
         #region 过滤
-        public void SetFilter(Func<object, bool>  dataFilter)
+        public void SetFilter(Func<object, bool> dataFilter)
         {
             try
             {
@@ -206,19 +386,25 @@ namespace ViewModel
                 _ItemsSourceView = CollectionViewSource.GetDefaultView(_ItemsSource);
                 _ItemsSourceView.Filter = new Predicate<object>(DataFilter);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-               
+
             }
         }
         public List<PropertyInfo> typePropertylist = new List<PropertyInfo>();
-
-        /// <summary>
-        /// 原子操作上锁，防止操作未完成  又执行下一次操作
-        /// </summary>
         private long usingResource = 0;
-
         List<FilterProperty> ComparePropertyList = new List<FilterProperty>();
+        public List<string> NumberColumn = new List<string>() {
+            "decimal",
+            "int",
+            "int32",
+            "int64",
+            "long",
+            "double",
+            "float"
+        };
+
+
 
 
         public static object GetDefaultForType(Type propertyType)
@@ -232,10 +418,59 @@ namespace ViewModel
                 return propertyType.IsValueType ? Activator.CreateInstance(propertyType) : null;
             }
         }
-  
-        
 
-         
+
+
+
+        public string GetValueAndCondition(object filterValue, out object actualfilterValue)
+        {
+            string conditionStr = "=";
+            string filterValueStr = filterValue.ToString();
+
+            if (filterValueStr.StartsWith(">"))
+            {
+                conditionStr = ">";
+                filterValue = filterValueStr.Replace(">", "");
+            }
+            if (filterValueStr.StartsWith("<"))
+            {
+                conditionStr = "<";
+                filterValue = filterValueStr.Replace("<", "");
+            }
+            if (filterValueStr.StartsWith("<="))
+            {
+                conditionStr = "<=";
+                filterValue = filterValueStr.Replace("<=", "");
+            }
+            if (filterValueStr.StartsWith(">="))
+            {
+                conditionStr = ">=";
+                filterValue = filterValueStr.Replace(">=", "");
+            }
+            if (filterValueStr.StartsWith("="))
+            {
+                conditionStr = "=";
+                filterValue = filterValueStr.Replace("=", "");
+            }
+            else if (filterValueStr.StartsWith("!="))
+            {
+                conditionStr = "!=";
+                filterValue = filterValueStr.Replace("!=", "");
+            }
+            if (filterValueStr.StartsWith("!like"))
+            {
+                conditionStr = "!like";
+                filterValue = filterValueStr.Replace("!like", "");
+            }
+            else if (filterValueStr.StartsWith("like"))
+            {
+                conditionStr = "like";
+                filterValue = filterValueStr.Replace("like", "");
+            }
+            actualfilterValue = filterValue;
+            return conditionStr;
+        }
+
         #endregion
 
         public void Refresh()

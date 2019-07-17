@@ -1,4 +1,5 @@
-﻿using LogService;
+﻿using DTO;
+using LogService;
 using Model;
 using Proxy;
 using System;
@@ -23,11 +24,12 @@ namespace ViewModel
             PopupTable = new Hashtable();
             CharacteristicBookList = new Popup<bool>();
             PopularWriterList = new Popup<bool>();
-            DetailData = new DataGrid<BookDetailData>();
+            DetailData = new DataGrid<DetailData>();
 
             PopupTable.Add("CharacteristicBookList", CharacteristicBookList);
             PopupTable.Add("PopularWriterList", PopularWriterList);
 
+            DetailData.SkipNumber = 1;
             DetailData.BindSource(LoadData);
         }
 
@@ -35,6 +37,10 @@ namespace ViewModel
         /// 日志服务
         /// </summary>
         private ILogService _logservice;
+        /// <summary>
+        /// 当前选择书籍类型
+        /// </summary>
+        public String _family = null;
 
         /// <summary>
         /// popup 集合  
@@ -53,17 +59,19 @@ namespace ViewModel
         /// <summary>
         /// 列表详细数据
         /// </summary>
-        public DataGrid<BookDetailData> DetailData { get; set; }
+        public DataGrid<DetailData> DetailData { get; set; }
         /// <summary>
         /// 设置 ItemsSource
         /// </summary>
         public void LoadData()
         {
-            List<BookDetailData> list = ExchangeBookServer.GetBookDetailData();
-            if (list != null)
-            {
-                DetailData.SetItemsSource(list);
-            }
+            int currentPage = DetailData.CurrentPage;
+            int skipNumber = DetailData.SkipNumber;
+
+
+            DetailDataResult resul = ExchangeBookServer.GetBookDetailData(currentPage, skipNumber, _family);
+            DetailData.SetItemsSource(resul.Data);
+            DetailData.RecordCount = resul.TotalCount;
         }
 
 
@@ -115,6 +123,18 @@ namespace ViewModel
                 _logservice.Error(e.Message);
                 return;
             }
+        }
+
+        public BaseCommand MenuCommand
+        {
+            get { return new BaseCommand(MenuFunc); } 
+        }
+        private void MenuFunc(object obj)
+        {
+            String key = obj.ToString();
+
+
+            LoadData();
         }
     }
 }

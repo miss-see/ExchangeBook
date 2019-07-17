@@ -36,22 +36,19 @@ namespace Proxy
         /// 获取数据详细数据
         /// </summary>
         /// <returns></returns>
-        public static List<BookDetailData> GetBookDetailData()
+        public static DetailDataResult GetBookDetailData(int currentPage, int number, String family)
         {
-            List<BookDetailData> list = new List<BookDetailData>();
-
             try
             {
-                String remsg = _server.GridData();
+                String remsg = _server.GridData(currentPage, number, family);
                 if (String.IsNullOrEmpty(remsg)) ///若返回字符串为空 则返回k空
                 {
                     _logservice.Error("请求书籍详细数据，服务器返回值为空");
                     return null;
                 }
-                BookDetailData data = JsonConvert.DeserializeObject<BookDetailData>(remsg);
-                list.Add(data);
+                DetailDataResult data = JsonConvert.DeserializeObject<DetailDataResult>(remsg);
+                return data;
 
-                return list;
             }
             catch (Exception e)
             {

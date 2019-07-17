@@ -28,7 +28,13 @@
         </s:complexType>
       </s:element>
       <s:element name="GridData">
-        <s:complexType />
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="currentPage" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="count" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="family" type="s:string" />
+          </s:sequence>
+        </s:complexType>
       </s:element>
       <s:element name="GridDataResponse">
         <s:complexType>
